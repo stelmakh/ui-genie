@@ -12,5 +12,8 @@
     "generate"
   ],
   "author": "vk.stelmakh@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
 }
