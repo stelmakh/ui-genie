@@ -2,10 +2,18 @@
   "name": "ui-genie",
   "version": "0.0.1",
   "description": "A simple library for data-schema based UI generation",
-  "main": "index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:stelmakh/ui-genie.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p tsconfig.json"
+    "clean": "rimraf ./dist",
+    "build": "run-s clean build-ts",
+    "build-ts": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json"
   },
   "keywords": [
     "React",
@@ -15,10 +23,17 @@
   "author": "vk.stelmakh@gmail.com",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "eslint": "^8.7.0",
     "eslint-plugin-react": "^7.28.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "^4.5.5"
+  },
+  "peerDependencies": {
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   }
 }

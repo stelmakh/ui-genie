@@ -3,10 +3,14 @@
     "src/**/*"
   ],
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "jsx": "react",
+    "target": "es6",
+    "module": "esnext",
+    "outDir": "./dist/esm",
+    "declarationDir": "dist/types",
+    "moduleResolution": "node",
     "strict": true,
-    "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true
   }
 }
