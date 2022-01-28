@@ -1,22 +1,27 @@
 import * as React from 'react';
-import { ComponentsMap } from '../components-map';
-import { JSONSchema } from '../types';
+import { UIGenieProps } from '../types';
 
-export interface UIGenieViewProps {
-    schema?: JSONSchema
-    data?: unknown
-    componentsMap?: ComponentsMap
+export type UIGenieViewProps = UIGenieProps
+
+export class UIGenieView extends React.Component<UIGenieViewProps>{
+	render() {
+		const {
+			schema,
+			data,
+			componentsMap
+		} = this.props;
+
+		const matchedComponents = componentsMap?.getItemsForNode(schema);
+		console.log(schema, data, componentsMap);
+		const Component = matchedComponents[0]?.component;
+
+		if (!Component) {
+			return <div>
+                NO COMPONENT FOUND
+			</div>;
+		}
+
+		return <Component {...this.props}/>;
+
+	}
 }
-
-export const UIGenieView: React.FC<UIGenieViewProps> = ({
-	schema,
-	data,
-	componentsMap
-
-}) => {
-	console.log(schema, data, componentsMap);
-
-	return <div>
-        Hello UIGenie
-	</div>;
-};

@@ -1,37 +1,74 @@
 import * as React from 'react';
-import { JSONSchemaType } from '../types';
+import { JSONSchema, UIGenieProps } from '../types';
+
+type ItemsByName = Map<string, ComponentsMapItem>
+type ItemsByType = { [key: string]: ComponentsMapItem[] }
 
 export class ComponentsMap {
-	name: string;
-	map: Map<string, ComponentsMapItem>;
+	private name: string;
+	private mapByName: ItemsByName;
+	private mapByType: ItemsByType;
 
 	constructor(name: string) {
 		this.name = name;
-		this.map = new Map();
+		this.mapByName = new Map();
+		this.mapByType = {};
 	}
 
-	addItem = (item: ComponentsMapItem): ComponentsMap => {
-		if (this.map.has(item.name)) {
+	public addItem(item: ComponentsMapItem): ComponentsMap{
+		if (this.mapByName.has(item.name)) {
 			throw Error(`item with name ${item.name} exists`);
 		}
 
-		this.map.set(item.name, item);
-		return this;
-	};
+		this.mapByName.set(item.name, item);
+		const typeItems = this.mapByType[item.type] || [];
+		typeItems.push(item);
+		this.mapByType[item.type] = typeItems;
 
-	removeItem = (name: string): ComponentsMap => {
-		if (this.map.has(name)) {
+		return this;
+	}
+
+	public removeItem(name: string): ComponentsMap {
+		if (this.mapByName.has(name)) {
 			throw Error(`item with name ${name} does not exist`);
 		}
 
-		this.map.delete(name);
+		this.mapByName.delete(name);
+
+		Object.keys(this.mapByType).every(type => {
+			const items = this.mapByType[type];
+			const index = items.findIndex(item => item.name === name);
+
+			if (index === -1) { return true; }
+
+			items.splice(index, 1);
+			return false;
+		});
+
 		return this;
-	};
+	}
+
+	public getName() {
+		return this.name;
+	}
+
+	public getItem(name: string) {
+		return this.mapByName.get(name);
+	}
+
+	public getItemsForNode(node: JSONSchema): ComponentsMapItem[] {
+		const type = node.type;
+		if (!type) return [];
+
+		const items = this.mapByType[type as string] || [];
+
+		return items;
+	}
 }
 
 export type ComponentsMapItem = {
     name: string;
-    type: JSONSchemaType;
-    component: () => React.ReactNode;
+    type: string;
+    component: React.ComponentType<UIGenieProps>;
     //TODO: condition
 }
