@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react';
+import { ErrorBoundary } from '../error-boundary';
 import { UIGenieProps } from '../types';
 
 export type UIGenieViewProps = UIGenieProps
 
-export class UIGenieView extends React.Component<UIGenieViewProps>{
+class UIGenieViewLogic extends React.Component<UIGenieViewProps>{
 	render() {
 		const {
 			schema,
@@ -16,12 +17,15 @@ export class UIGenieView extends React.Component<UIGenieViewProps>{
 		const Component = matchedComponents[0]?.component;
 
 		if (!Component) {
-			return <div>
-                NO COMPONENT FOUND
-			</div>;
+			throw new Error(`No component found for type ${schema.type}`);
 		}
 
 		return <Component {...this.props}/>;
-
 	}
 }
+
+export const UIGenieView: React.FC<UIGenieViewProps> = props => (
+	<ErrorBoundary>
+		<UIGenieViewLogic {...props}/>
+	</ErrorBoundary>
+);
