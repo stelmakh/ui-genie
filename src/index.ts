@@ -1,3 +1,3 @@
-export * from './ui-genie-view';
+export * from './components';
 export * from './components-map';
 export * from './types';
