@@ -1,5 +1,5 @@
 import React from 'react';
-import { UIGenieView } from '../ui-genie-view';
+import { UIGenieView } from './ui-genie-view';
 import { UIGenieProps } from '../types';
 
 import {buildJsonPointer, nextSchema} from '../utils';
