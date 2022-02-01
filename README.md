@@ -72,3 +72,7 @@ componentsMap.addItem({
 ## Schema
 
 `UIGenie` supports `JSONSchema` schemas version 6 and above.
+
+## Demo
+
+You can find the demo app [here](https://github.com/stelmakh/ui-genie-demo)
