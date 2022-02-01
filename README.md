@@ -6,6 +6,11 @@ A library for data-schema based UI generation in React applications.
 
 `UIGenieView` renders given `data` using `schema` for validation and `componentsMap` to know how to render it
 
+### Installation
+```
+npm install --save ui-genie
+```
+
 ### Usage
 ```tsx
 () => (

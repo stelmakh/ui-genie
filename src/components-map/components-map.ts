@@ -70,5 +70,4 @@ export type ComponentsMapItem = {
     name: string;
     type: string;
     component: React.ComponentType<UIGenieProps>;
-    //TODO: condition
 }
